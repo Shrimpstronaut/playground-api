@@ -3,7 +3,10 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
@@ -49,6 +52,18 @@ class Handler extends ExceptionHandler
     {
         if ($exception instanceof NotFoundHttpException){
             return response()->json(['error' => 'Route not found. API is located under /api'], 404);
+        }
+
+        if ($exception instanceof ModelNotFoundException){
+            return response()->json(['error' => 'Model not found'], 404);
+        }
+
+        if($exception instanceof ValidationException) {
+            return response()->json(['error' => 'Validation failed', 'errors' => $exception->errors()]);
+        }
+
+        if($exception instanceof MethodNotAllowedHttpException) {
+            return response()->json(['error' => 'Method not allowed']);
         }
 
         return parent::render($request, $exception);
