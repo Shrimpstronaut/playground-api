@@ -83,7 +83,7 @@ class AccountController extends Controller
     {
         $this->validate($request, $this->rules($id));
 
-        $account = Account::find($id);
+        $account = Account::findOrFail($id);
         $account->fill($request->all());
         $account->save();
         return response()->json($account);

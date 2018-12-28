@@ -6,7 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Account
+ *
  * @package App
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Account newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Account newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Account query()
+ * @mixin \Eloquent
  */
 class Account extends Model
 {
